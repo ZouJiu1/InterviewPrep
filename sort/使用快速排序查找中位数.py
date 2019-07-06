@@ -13,6 +13,9 @@ class search_median(object):
 
     def quicksort(self, part, left, right):
         self.length = len(self.array)
+        if (left==right) and (left==self.length//2):
+            self.medi=self.array[left]
+            return
         if left < right:
             sholdindex = self.partition(part, left, right)
             if (sholdindex == self.length//2):
