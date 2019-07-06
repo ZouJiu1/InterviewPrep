@@ -1,5 +1,5 @@
-#其中速度最快的是第六种方法
 #encoding=utf-8
+#其中速度最快的是第六种方法
 import random
 import time
 import matplotlib.pyplot as plt
