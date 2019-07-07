@@ -35,13 +35,13 @@ class quicksort(object):
         交换大小不等的数对，双指针交换，最左侧为枢纽值
         '''
         shold = part[left]
-        temp =left
+        temp = left
         while left < right:
             while (left < right) and (part[right] >= shold):
                 right = right - 1
             while (left < right) and (part[left] <= shold):
                 left = left + 1
-            if left<right:
+            if left < right:
                 part[left], part[right] = part[right], part[left]
         part[temp] = part[left]
         part[left] = shold

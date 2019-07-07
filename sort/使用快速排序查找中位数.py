@@ -45,6 +45,7 @@ if __name__=="__main__":
     s1=time.time()
     x = [random.randint(0, 100000) for i in range(10000)]
     x_copy = x.copy()
+
     print('before sorting',  x[:19])
     r = quicksort(x).qsort(2)
     print('after sorting',  x[:19])
