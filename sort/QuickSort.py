@@ -95,9 +95,9 @@ class quicksort(object):
 
     def median(self,part, left,right):
         center = (left+right)//2
-        if part(left)>part[center]:
+        if part[left]>part[center]:
             part[left],part[center]=part[center],part[left]
-        if part(left)>part[right]:
+        if part[left]>part[right]:
             part[left],part[right]=part[right],part[left]
         if part[right]<part[center]:
             part[right],part[center]=part[center],part[right]
@@ -116,7 +116,7 @@ class quicksort(object):
 
     def partition6(self, part, left, right):
         #三数取中法，并在子序列长度小于10时，使用直接插入排序
-        if (left+10<=right):
+        if (left + 8 < right):
             part = self.median(part,left,right)
             part[right-1], part[left] = part[left], part[right-1]
             shold = part[left]
@@ -135,7 +135,7 @@ class quicksort(object):
             self.insertSort(part,left,right)
             return left
 
-    def quicksorts(self, array, left, right, way=6):
+    def quicksorts(self, array, left, right, way):
         if left<right:
             if way==1:
                 sholdindex=self.partition1(array, left, right)
@@ -146,80 +146,74 @@ class quicksort(object):
             elif way==4:
                 sholdindex=self.partition4(array,left,right)
             elif way==5:
-                sholdindex=self.partition4(array,left,right)
-            elif way==6:
                 sholdindex=self.partition5(array,left,right)
-            self.quicksorts(array, left, sholdindex-1)
-            self.quicksorts(array, sholdindex+1, right)
+            elif way==6:
+                sholdindex=self.partition6(array,left,right)
+            self.quicksorts(array, left, sholdindex-1, way=way)
+            self.quicksorts(array, sholdindex+1, right, way=way)
         return array
 
     def qsort(self,way):
-        return self.quicksorts(self.array, 0, len(self.array)-1,way)
-
-    def qsort_compare(self, array ,way):
-        self.array = array
-        return self.quicksorts(self.array, 0, len(self.array)-1,way)
-
-    def compare(self, array):
-        times={1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
-        for i in range(10):
-            print('poch %d---------------------------------------------------------------------'%(i+1))
-            s1=time.time()
-            r=self.qsort_compare(array, 1)
-            print('way 1: ',r[:100])
-            times[1].append(time.time()-s1)
-            print('way 1 used time: ',round(time.time()-s1, 4))
-
-            s2=time.time()
-            r = self.qsort_compare(array, 2)
-            print('way 2: ', r[:100])
-            times[2].append(time.time() - s2)
-            print('way 2 used time: ', round(time.time() - s2, 4))
-
-            s3=time.time()
-            r = self.qsort_compare(array, 3)
-            print('way 3: ', r[:100])
-            times[3].append(time.time() - s3)
-            print('way 3 used time: ', round(time.time() - s3, 4))
-
-            s4=time.time()
-            r = self.qsort_compare(array, 4)
-            print('way 4: ', r[:100])
-            times[4].append(time.time() - s4)
-            print('way 4 used time: ', round(time.time() - s4, 4))
-
-            s5=time.time()
-            r = self.qsort_compare(array, 5)
-            print('way 5: ', r[:100])
-            times[5].append(time.time() - s5)
-            print('way 5 used time: ', round(time.time() - s5, 4))
-
-            s6=time.time()
-            r = self.qsort_compare(array, 6)
-            print('way 6: ', r[:100])
-            times[6].append(time.time() - s6)
-            print('way 6 used time: ', round(time.time() - s6, 4))
-
-        res=[]
-        times=sorted(times.items(),key=lambda x:x[0])
-        print(times)
-        for j in times:
-            res.append(np.mean(j[1]))
-
-        fig=plt.figure(figsize=(6, 7))
-        plt.plot([1,2,3,4,5,6], res)
-        plt.xlabel('way')
-        plt.ylabel('time/s')
-        plt.savefig(r'quicksort_compare_time.png')
-        plt.show()
+        return self.quicksorts(self.array, 0, len(self.array)-1, way)
 
 if __name__=='__main__':
     #参考https://blog.csdn.net/u013074465/article/details/42083607/
     compare=True
     if compare:
-        x = [random.randint(0, 1000000000) for i in range(10000000)]
-        # x = [random.randint(0, 1000) for i in range(1000)]
-        quicksort(x).compare(x)
+        x_ = [random.randint(0, 1000000000) for i in range(10000000)]
+        x = x_.copy()
+        times = {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+        for i in range(10):
+            print('poch %d---------------------------------------------------------------------' % (i + 1))
+            s1 = time.time()
+            r = quicksort(x_.copy()).qsort(1)
+            print('way 1: ', r[:100])
+            times[1].append(time.time() - s1)
+            print('way 1 used time: ', round(time.time() - s1, 4))
+
+            s2 = time.time()
+            r = quicksort(x_.copy()).qsort(2)
+            print('way 2: ', r[:100])
+            times[2].append(time.time() - s2)
+            print('way 2 used time: ', round(time.time() - s2, 4))
+
+            s3 = time.time()
+            r = quicksort(x_.copy()).qsort(3)
+            print('way 3: ', r[:100])
+            times[3].append(time.time() - s3)
+            print('way 3 used time: ', round(time.time() - s3, 4))
+
+            s4 = time.time()
+            r = quicksort(x_.copy()).qsort(4)
+            print('way 4: ', r[:100])
+            times[4].append(time.time() - s4)
+            print('way 4 used time: ', round(time.time() - s4, 4))
+
+            s5 = time.time()
+            r = quicksort(x_.copy()).qsort(5)
+            print('way 5: ', r[:100])
+            times[5].append(time.time() - s5)
+            print('way 5 used time: ', round(time.time() - s5, 4))
+
+            s6 = time.time()
+            r = quicksort(x_.copy()).qsort(6)
+            print('way 6: ', r[:100])
+            times[6].append(time.time() - s6)
+            print('way 6 used time: ', round(time.time() - s6, 4))
+
+        res = []
+        times = sorted(times.items(), key=lambda x: x[0])
+        print(times)
+        for j in times:
+            res.append(np.mean(j[1]))
+
+        fig = plt.figure(figsize=(6, 7))
+        plt.plot([1, 2, 3, 4, 5, 6], res)
+        plt.xlabel('way')
+        plt.ylabel('time/s')
+        plt.savefig(r'quicksort_compare_time.png')
+        plt.show()
+
     else:
         x = [random.randint(0,10) for i in range(10)]
         print('before sorting',x)
