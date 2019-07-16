@@ -55,11 +55,6 @@ public:
                     result.push_back(j);
                     return result;
                 }
-                else{
-                    result.push_back(j);
-				    result.push_back(tmpmap[target-nums[j]]);
-                    return result;
-                }
 			}
 		}
 		return {};
