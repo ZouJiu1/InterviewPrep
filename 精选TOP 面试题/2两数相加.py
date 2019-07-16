@@ -82,22 +82,20 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1, l2):
-        p1=l1
-        p2=l2
         pre=0
         first = ListNode(0)
         curr = first
-        while(p1 != None) or (p2 != None):
-            if p1==None:
+        while(l1 != None) or (l2 != None):
+            if l1==None:
                 x=0
             else:
-                x=p1.val
-                p1=p1.next
-            if p2==None:
+                x=l1.val
+                l1=l1.next
+            if l2==None:
                 y=0
             else:
-                y=p2.val
-                p2=p2.next
+                y=l2.val
+                l2=l2.next
             sum = x+y+pre
             mod = sum%10
             pre = sum//10
