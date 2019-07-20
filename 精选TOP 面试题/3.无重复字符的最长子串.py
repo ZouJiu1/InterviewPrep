@@ -18,27 +18,41 @@
 #         if len(res)==0:
 #             return 1
 #         return max(res)
+
+# class Solution:
+#     def lengthOfLongestSubstring(self, s):
+#         if len(s) <= 1:
+#             return len(s)
+#         start = ''
+#         res = []
+#         for j in range(len(s)):
+#             if s[j] not in start:
+#                 start += s[j]
+#             else:
+#                 temp = start.index(s[j])
+#                 res.append(len(start))
+#                 start = start[temp+1:]+s[j]
+#                 if j == len(s) - 1:
+#                     return max(res)
+#             if (start!=''):
+#                 res.append(len(start))
+#             if j==len(s)-1:
+#                 return max(res)
+
 class Solution:
     def lengthOfLongestSubstring(self, s):
-        if len(s) <= 1:
-            return len(s)
-        start = ''
-        res = []
-        for j in range(len(s)):
-            if s[j] not in start:
-                start += s[j]
+        dic = {}
+        left = 0
+        length = 0
+        for i in range(len(s)):
+            if (s[i] not in dic.keys()) or (dic[s[i]] < left):
+                length = max(length, i - left + 1)
             else:
-                temp = start.index(s[j])
-                res.append(len(start))
-                start = start[temp+1:]+s[j]
-                if j == len(s) - 1:
-                    return max(res)
-            if (start!=''):
-                res.append(len(start))
-            if j==len(s)-1:
-                return max(res)
+                left = dic[s[i]]
+            dic[s[i]] = i + 1
+        return length
 
-string = "au"
+string = "tmmzuxt"
 s = Solution()
 r = s.lengthOfLongestSubstring(string)
 print(r)

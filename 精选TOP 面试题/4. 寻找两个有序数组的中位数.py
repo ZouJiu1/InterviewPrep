@@ -1,7 +1,3 @@
-from sort.QuickSort import quicksort
-import random
-import time
-
 class search_median(object):
     def __init__(self, array, way):
         self.array = array
@@ -15,6 +11,7 @@ class search_median(object):
             self.quicksort1(self.array, left, right)
         else:
             self.quicksort2(self.array, left, right)
+            print(self.save, self.medi, self.array)
             if len(self.save)==1:
                 self.medi = round((self.array[self.length//2] + self.array[self.length//2-1])/2, 1)
 
@@ -69,20 +66,38 @@ class search_median(object):
         part[left] = shold
         return left
 
-if __name__=="__main__":
-    #先排序，然后取中间的数
-    s1=time.time()
-    x = [random.randint(0, 100000) for i in range(10000)]
-    x_copy = x.copy()
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        x = nums1+nums2
+        if len(x)%2==0:
+            r = search_median(x, 2)
+        else:
+            r = search_median(x, 1)
+        r.median(0, len(x) - 1)
+        return r.medi
 
-    print('before sorting',  x[:19])
-    r = quicksort(x).qsort(2)
-    print('after sorting',  x[:19])
-    print('先排序，然后找到的中位数是：', r[len(x)//2],'用时为：',time.time()-s1)
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        x = nums1+nums2
+        x.sort()
+        length = len(x)
+        if len(x)%2==0:
+            return float((x[length//2]+x[length//2-1]))/2
+        else:
+            return float(x[length])
 
-    #在快速排序的过程中找到中位数
-    s2=time.time()
-    obj = search_median(x_copy, 1)
-    obj.median(0,len(x_copy)-1)
-    # res = search_median(x).median(0,len(x)-1)
-    print('使用快速排序的过程找到的中位数是：', obj.medi, '用时为：',time.time()-s2)
+x1 = [1, 2]
+x2 = [3, 4]
+s=Solution()
+s=s.findMedianSortedArrays(x1,x2)
+print(s)
