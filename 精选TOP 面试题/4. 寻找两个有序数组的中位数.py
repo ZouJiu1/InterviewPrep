@@ -99,5 +99,5 @@ class Solution(object):
 x1 = [1, 2]
 x2 = [3, 4]
 s=Solution()
-s=s.findMedianSortedArrays(x1,x2)
+s=s.findMedianSortedArrays(x1, x2)
 print(s)
