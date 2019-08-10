@@ -69,6 +69,23 @@ class Tree:
         right_item = self.postorder(root.child2)
         return left_item + right_item + result
 
+    def deep_traverse(self, root): #广度遍历
+        if root is None:
+            return []
+        result = []
+        my_queue = []
+        my_queue.append(root)
+        while my_queue != []:
+            pop_node = my_queue.pop(0)
+            if pop_node.child1 is not None:
+                my_queue.append(pop_node.child1)
+
+            if pop_node.child2 is not None:
+                my_queue.append(pop_node.child2)
+            result.append(pop_node.item)
+        return result
+
+
 t = Tree()
 for i in range(10):
     t.add(i)
@@ -76,3 +93,4 @@ print('层序遍历:',t.traverse())
 print('先序遍历:',t.preorder(t.root))
 print('中序遍历:',t.inorder(t.root))
 print('后序遍历:',t.postorder(t.root))
+print('广度遍历:',t.deep_traverse(t.root))
